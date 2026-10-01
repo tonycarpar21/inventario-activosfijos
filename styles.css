@@ -10,6 +10,54 @@
 =====================================================
 */
 
+.logo-container{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  width:100%;
+  margin:12px auto 32px;
+}
+
+.logo-dassac{
+  display:block;
+  width:290px;
+  max-width:85%;
+  height:auto;
+  object-fit:contain;
+}
+
+.footer-caraf{
+  width:100%;
+  text-align:center;
+  margin:68px auto 25px;
+}
+
+.footer-caraf h2{
+  margin:0 0 22px 0;
+  padding:0;
+
+  text-align:center;
+  color:#000;
+
+  font-size:23px;
+  font-weight:700;
+  line-height:1.2;
+}
+
+.footer-caraf p{
+  margin:0;
+  padding:0;
+
+  text-align:center;
+  color:#000;
+
+  font-size:14px;
+  font-weight:400;
+  line-height:1.4;
+
+  white-space:nowrap;
+}
+
 :root{
   --azul:#243a5e;
   --azul-claro:#e0ebff;
@@ -34,7 +82,6 @@ h2{
   margin:10px 0 20px;
 }
 
-/* BOTONES */
 button{
   padding:14px;
   border:none;
@@ -46,7 +93,6 @@ button{
   margin-top:14px;
 }
 
-/* CONTENEDORES */
 .card{
   background:white;
   padding:16px;
@@ -63,28 +109,42 @@ button{
   padding-left:8px;
 }
 
+.input-con-micro{
+  position:relative;
+  width:100%;
+}
+
+.input-con-micro input{
+  width:100%;
+  padding-right:42px;
+}
+
 .btn-mic{
-  all: unset;
+  all:unset;
 
-  width:40px;
-  height:40px;
+  position:absolute;
+  right:8px;
+  top:50%;
+  transform:translateY(-50%);
 
-  border-radius:50%;
-  background:var(--amarillo);
-  color:#243846;
+  width:30px;
+  height:30px;
 
-  font-size:20px;
-  cursor:pointer;
-
-  display:inline-flex;
+  display:flex;
   align-items:center;
   justify-content:center;
 
-  box-shadow:0 3px 6px rgba(0,0,0,.25);
+  cursor:pointer;
+  font-size:18px;
+  line-height:1;
+
+  background:transparent;
+  border:none;
+  box-shadow:none;
+  color:var(--azul);
 }
 
 
-/* ✨ Brillo mientras escucha */
 .btn-mic.listening{
   box-shadow:
     0 0 0 4px rgba(246,196,83,.35),
@@ -92,14 +152,12 @@ button{
   transform:scale(1.08);
 }
 
-/* feedback táctil */
 .btn-mic:active{
   transform:scale(0.92);
 }
 
 .hidden{display:none}
 
-/* INICIO */
 .inicio-box{
   max-width:420px;
   margin:0 auto;
@@ -168,7 +226,6 @@ button{
   border-bottom:3px solid var(--amarillo);
 }
 
-/* FORM */
 .row{
   display:flex;
   gap:10px;
@@ -201,7 +258,7 @@ input, select{
   font-size:16px;
 }
 
-button:not(.btn-mic){
+button:not(.btn-mic):not(.microfono-input){
   min-height:48px;
   font-size:16px;
 }
@@ -282,10 +339,8 @@ button:not(.btn-mic){
   transform:scale(0.97);
 }
 
-/* Botones principales largos */
-/* Botones principales largos */
-#tab-registro > .card button:not(.btn-nav):not(.btn-mic),
-#tab-multiple > .card button:not(.btn-nav):not(.btn-mic),
+#tab-registro > .card button:not(.btn-nav):not(.btn-mic):not(.microfono-input),
+#tab-multiple > .card button:not(.btn-nav):not(.btn-mic):not(.microfono-input),
 #tab-lista .btn-export{
   width:100%;
   padding:14px;
@@ -294,7 +349,6 @@ button:not(.btn-mic){
   border-radius:10px;
 }
 
-/* REGISTROS */
 .registro{
   background:linear-gradient(90deg,#f6f8fc,#ffffff);
   background:#ffffff;
@@ -387,4 +441,160 @@ button:active{
 
 #msgGuardado{
   color:var(--verde);
+}
+
+.medidas-container{
+  display:grid;
+  grid-template-columns:minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+  gap:7px;
+  align-items:center;
+  width:100%;
+}
+
+.medidas-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-top:16px;
+  margin-bottom:10px;
+}
+
+.medidas-header label{
+  margin:0;
+}
+
+.medidas-header select{
+  width:76px;
+  min-width:76px;
+
+  height:30px;
+  min-height:30px;
+
+  padding:4px 10px;
+  margin:0;
+
+  font-size:14px;
+
+  border:1px solid #cbd2dc;
+  border-radius: 0;
+
+  background: #edeff3;
+}
+
+.medidas-pulgadas{
+  width:100%;
+}
+
+.medidas-pulgadas input{
+  width:100%;
+}
+
+.medidas-container input{
+  width:100%;
+  min-width:0;
+}
+
+.medida-x{
+  font-weight:700;
+  font-size:16px;
+  color:var(--azul);
+  text-align:center;
+}
+
+.medidas-titulo label{
+  margin:0;
+}
+
+.input-microfono{
+  position:relative;
+  width:100%;
+}
+
+.input-microfono input{
+  width:100%;
+  padding-right:44px;
+}
+
+.microfono-input{
+  position:absolute;
+  right:8px;
+  top:50%;
+  transform:translateY(-50%);
+
+  width:32px !important;
+  height:32px !important;
+  min-width:32px !important;
+  min-height:32px !important;
+
+  padding:0 !important;
+  margin:0 !important;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:transparent !important;
+  border:none;
+  border-radius:0;
+  box-shadow:none;
+
+  cursor:pointer;
+}
+
+.microfono-input svg{
+  width:25px;
+  height:25px;
+
+  fill:none;
+  stroke:#536174;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.microfono-input:active{
+  background:transparent !important;
+  transform:translateY(-50%) scale(.92);
+}
+
+.microfono-input.listening svg{
+  stroke:#f6c453;
+}
+
+.titulo-icono{
+  display:flex;
+  align-items:center;
+  gap:7px;
+}
+
+.titulo-icono svg{
+  width:17px;
+  height:17px;
+  flex-shrink:0;
+
+  fill:none;
+  stroke:var(--azul);
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.btn-edit svg,
+.btn-del svg{
+  width:18px;
+  height:18px;
+
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.btn-edit{
+  color:var(--azul);
+}
+
+.btn-del{
+  color:var(--rojo);
 }
