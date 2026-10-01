@@ -17,15 +17,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Inventario de Activos Fijos</title>
 
+<link rel="icon" type="image/png" href="logo_dassac2.png">
 <link rel="stylesheet" href="styles.css">
 
 </head>
 
 <body>
 
-<h2>Inventario de Activos Fijos</h2>
+<div class="logo-container">
+  <img src="logo_dassac.png" alt="DAS Logistics Solutions S.A.C" class="logo-dassac">
+</div>
 
-<!-- PASO 1 -->
 <div class="card inicio-box" id="inicioBox">
   <label>DNI</label>
   <input id="dniInput">
@@ -36,7 +38,6 @@
   <button id="btnContinuar" onclick="confirmarInicio()">Continuar</button>
 </div>
 
-<!-- APP -->
 <div id="app" class="hidden">
 
 <div class="card" style="display:flex;justify-content:space-between">
@@ -50,32 +51,36 @@
   <div class="tab" onclick="mostrarTab('lista',this)">Registros</div>
 </div>
 
-<!-- TAB REGISTRO -->
 <div id="tab-registro">
 
 <div class="card">
   <h3>Identificación del activo</h3>
   <div class="row">
     <div>
-      <label>Código *</label>
+      <label>Código</label>
       <input id="codigo" required>
     </div>
     <div>
       <label>Código antiguo</label>
       
-      <div style="display:flex; gap:8px; align-items:flex-end;">
-        <input id="codigoAntiguo">
-        
-        <button
-  type="button"
-  id="btnVozCodigoAntiguo"
-  class="btn-mic"
-  onclick="dictarCodigoAntiguo()"
->
-  🎤
-</button>
+<div class="input-microfono">
+  <input id="codigoAntiguo">
 
-      </div>
+  <button
+    type="button"
+    id="btnVozCodigoAntiguo"
+    class="microfono-input"
+    onclick="dictarCodigoAntiguo()"
+    aria-label="Dictar código antiguo"
+  >
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
+      <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+      <path d="M12 19v3"></path>
+      <path d="M8 22h8"></path>
+    </svg>
+  </button>
+</div>
 
     </div>
   </div>
@@ -84,7 +89,7 @@
 <div class="card">
   <h3>Detalle del activo</h3>
   <label>Descripción</label>
-  <input id="descripcion">
+  <input id="descripcion" required>
 
   <div class="row">
     <div><label>Marca</label><input id="marca"></div>
@@ -102,8 +107,28 @@
     <div><label>Material</label><input id="material"></div>
   </div>
 
-  <label>Medidas</label>
-  <input id="medidas" placeholder="Largo x Ancho x Alto">
+  <div class="medidas-header">
+    <div class="medidas-titulo">
+      <label>Medidas</label>
+    </div>
+    <select id="unidadMedida" onchange="cambiarUnidadMedida()">
+      <option value="cm">cm</option>
+      <option value="m">m</option>
+      <option value="in">in</option>
+    </select>
+  </div>
+
+  <div id="medidas3d" class="medidas-container">
+    <input id="medidaLargo" type="number" step="any" placeholder="Largo">
+    <span class="medida-x">×</span>
+    <input id="medidaAncho" type="number" step="any" placeholder="Ancho">
+    <span class="medida-x">×</span>
+    <input id="medidaAlto" type="number" step="any" placeholder="Alto">
+  </div>
+
+  <div id="medidasPulgadas" class="medidas-pulgadas hidden">
+    <input id="medidaPulgadas" type="number" step="any" placeholder="Pulgadas">
+  </div>
 </div>
 
 <div class="card">
@@ -150,21 +175,39 @@
 
 </div>
 
-<!-- TAB MULTIPLE -->
 <div id="tab-multiple" class="hidden">
 
   <div class="card">
-    <h3>📦 Activo base (último registrado)</h3>
+    <h3 class="titulo-icono">
+      <svg viewBox="0 0 24 24">
+        <path d="M4 7l8-4 8 4-8 4-8-4Z"/>
+        <path d="M4 7v10l8 4 8-4V7"/>
+        <path d="M12 11v10"/>
+      </svg>
+      Activo base (último registrado)
+    </h3>
     <div id="activoBaseInfo"></div>
   </div>
 
   <div class="card">
-    <h3>⚙️ Campos variables</h3>
+    <h3 class="titulo-icono">
+      <svg viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M12 2v3M12 19v3M4.9 4.9 7 7M17 17l2.1 2.1M2 12h3M19 12h3M4.9 19.1 7 17M17 7l2.1-2.1"/>
+      </svg>
+      Campos variables
+    </h3>
     <div id="camposVariables"></div>
   </div>
 
   <div class="card">
-    <h3>🔢 Cantidad de activos</h3>
+    <h3 class="titulo-icono">
+      <svg viewBox="0 0 24 24">
+        <rect x="3" y="5" width="18" height="14" rx="1"/>
+        <path d="M8 9h8M8 13h8M8 17h5"/>
+      </svg>
+      Cantidad de activos
+    </h3>
     <input type="number" id="cantidadMultiples" min="1" placeholder="">
     <button onclick="generarMultiples()">Generar registros</button>
   </div>
@@ -177,13 +220,17 @@
 
 </div>
 
-<!-- TAB LISTA -->
 <div id="tab-lista" class="card hidden">
-  <button class="btn-export" onclick="exportar()">Exportar CSV</button>
+  <button class="btn-export" onclick="exportar()">Exportar</button>
   <div id="lista"></div>
 </div>
 
 </div>
+
+<footer class="footer-caraf">
+  <h2>Inventario de Activos Fijos</h2>
+  <p>© Derechos reservados DAS Logistics Solutions S.A.C</p>
+</footer>
 
 <script src="trabajadores.js"></script>
 <script src="activos.js"></script>
